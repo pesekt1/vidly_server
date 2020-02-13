@@ -14,17 +14,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const genre = await Genre.findById(req.params.id);
-//     if (!genre)
-//       return res.status(404).send("genre with given id was not found");
+router.get("/:id", async (req, res) => {
+  try {
+    const movie = await movie.findById(req.params.id);
+    if (!movie)
+      return res.status(404).send("movie with given id was not found");
 
-//     res.send(genre);
-//   } catch (error) {
-//     console.log("error: " + error.message);
-//   }
-// });
+    res.send(movie);
+  } catch (error) {
+    console.log("error: " + error.message);
+  }
+});
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
