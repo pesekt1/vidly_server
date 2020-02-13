@@ -1,6 +1,7 @@
 require("express-async-errors"); //we apply express-async-errors package
 const winston = require("winston"); //logger
 require("winston-mongodb"); //package for mongoDB logger
+require("config");
 
 module.exports = function() {
   //subscribing to uncaughtException event:
@@ -40,7 +41,7 @@ module.exports = function() {
 
   winston.add(
     new winston.transports.MongoDB({
-      db: "mongodb://localhost/vidly",
+      db: config.get("db"),
       level: "info",
       options: { useUnifiedTopology: true, useNewUrlParser: true }
     })
