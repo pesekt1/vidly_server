@@ -39,9 +39,12 @@ module.exports = function() {
     })
   );
 
+  //we load the connection string dynamically using config.get("db")
+  const db = config.get("db");
+
   winston.add(
     new winston.transports.MongoDB({
-      db: config.get("db"),
+      db: db,
       level: "info",
       options: { useUnifiedTopology: true, useNewUrlParser: true }
     })
