@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const winston = require("winston");
 
+require("./startup/cors.js")(app); //cors package - to be able to communicate between different ports and send headers
 require("./startup/log")(); //logger
 require("./startup/routes")(app); // we are calling the method defined in startup/routes.js
 require("./startup/db")(); //running startup/db.js function
@@ -18,7 +19,7 @@ require("./startup/prod")(app); //packages for production
 //throw new Error("Something failed during startup");
 
 //port listening:
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3900;
 const server = app.listen(port, () =>
   winston.info(`listening on port ${port}...`)
 );
