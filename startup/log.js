@@ -1,7 +1,7 @@
 require("express-async-errors"); //we apply express-async-errors package
 const winston = require("winston"); //logger
 require("winston-mongodb"); //package for mongoDB logger
-config = require("config");
+const config = require("config");
 
 module.exports = function() {
   //subscribing to uncaughtException event:
