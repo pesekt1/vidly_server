@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     title: req.body.title,
     genre: genre,
     numberInStock: req.body.numberInStock,
-    dailyRentalRate: req.body.dailyRentalRate
+    dailyRentalRate: req.body.dailyRentalRate,
   });
 
   try {
@@ -62,12 +62,12 @@ router.post("/", async (req, res) => {
 //   res.send(genre);
 // });
 
-// router.delete("/:id", async (req, res) => {
-//   const genre = await Genre.findByIdAndDelete(req.params.id);
+router.delete("/:id", async (req, res) => {
+  const movie = await Movie.findByIdAndDelete(req.params.id);
 
-//   if (!genre) return res.status(404).send("Genre not found");
+  if (!movie) return res.status(404).send("Movie not found");
 
-//   res.send(genre);
-// });
+  res.send(movie);
+});
 
 module.exports = router;
