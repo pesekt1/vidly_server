@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { Movie, validate } = require("../models/movies");
 const { Genre } = require("../models/genres");
+const auth = require("../middleware/auth");
+const validateObjectId = require("../middleware/validateObjectId");
+const admin = require("../middleware/admin");
 
 router.use(express.json());
 
@@ -14,7 +17,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+//middleware validateObjectId - we cannot access random id like movies/2
+router.get("/:id", validateObjectId, async (req, res) => {
   try {
     const movie = await Movie.findById(req.params.id);
     if (!movie)
@@ -25,7 +29,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -47,21 +51,36 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.put("/:id", async (req, res) => {
-//   const { error } = validate(req.body);
-//   if (error) return res.status(400).send(error.details[0].message);
+router.put("/:id", auth, async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-//   const genre = await Genre.findByIdAndUpdate(
-//     req.params.id,
-//     { name: req.body.name },
-//     { new: true }
-//   );
-//   if (!genre) return res.status(404).send("genre with given id was not found");
+  const genre = await Genre.findById(req.body.genreId);
+  if (!genre) return res.status(400).send("Invalid genre.");
 
-//   res.send(genre);
-// });
+  const movie = await Movie.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      genre: {
+        _id: genre._id,
+        name: genre.name,
+      },
+      numberInStock: req.body.numberInStock,
+      dailyRentalRate: req.body.dailyRentalRate,
+    },
+    { new: true }
+  );
 
-router.delete("/:id", async (req, res) => {
+  if (!movie)
+    return res.status(404).send("The movie with the given ID was not found.");
+
+  res.send(movie);
+});
+
+//middleware: auth - checks jwt, if ok it goes to admin middleware
+//checks if user isAdmin
+router.delete("/:id", [auth, admin], async (req, res) => {
   const movie = await Movie.findByIdAndDelete(req.params.id);
 
   if (!movie) return res.status(404).send("Movie not found");
