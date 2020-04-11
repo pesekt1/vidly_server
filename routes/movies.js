@@ -16,10 +16,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const movie = await movie.findById(req.params.id);
+    const movie = await Movie.findById(req.params.id);
     if (!movie)
       return res.status(404).send("movie with given id was not found");
-
     res.send(movie);
   } catch (error) {
     console.log("error: " + error.message);
