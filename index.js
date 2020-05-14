@@ -11,8 +11,8 @@ require("./startup/validation")(); //validation using Joi
 require("./startup/prod")(app); //packages for production
 
 //simulating unhandledRejection:
-const p = Promise.reject(new Error("Something went wrong miserably. "));
-p.then(() => console.log(p));
+// const p = Promise.reject(new Error("Something went wrong miserably. "));
+// p.then(() => console.log(p));
 
 // we dont call catch() so we will get unhandled rejection
 // we also dont use await ... try-catch block
