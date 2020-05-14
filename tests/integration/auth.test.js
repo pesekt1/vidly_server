@@ -26,7 +26,7 @@ describe("auth middleware", () => {
 
   afterEach(async () => {
     await server.close(); //closing server after each test
-    await Genre.remove({}); // dropping collection genres after each test
+    await Genre.deleteMany({}); // dropping collection genres after each test
   });
 
   //no token - status 401
@@ -43,7 +43,7 @@ describe("auth middleware", () => {
     expect(res.status).toBe(400);
   });
 
-  //invalid token - status 400
+  //valid token - status 200
   it("should return 200 if json web token is valid", async () => {
     const res = await exec();
     expect(res.status).toBe(200);

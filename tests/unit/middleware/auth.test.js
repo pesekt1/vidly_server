@@ -7,8 +7,9 @@ describe("auth middleware", () => {
     //we need testing payload
     const payload = {
       _id: new mongoose.Types.ObjectId().toHexString(),
-      isAdmin: true
+      isAdmin: true,
     };
+
     //we need a valid token
     const user = new User(payload);
     const token = user.generateAuthToken();

@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 // 2) our validate function
 
 const genreSchema = new mongoose.Schema({
-  name: { type: String, required: true }
+  name: { type: String, required: true },
 });
 
 //class based on our schema compiled into a model
@@ -14,9 +14,7 @@ const Genre = mongoose.model("Genre", genreSchema);
 
 function validate(genre) {
   const schema = Joi.object({
-    name: Joi.string()
-      .min(3)
-      .required()
+    name: Joi.string().min(5).max(50).required(),
   });
 
   return schema.validate(genre);

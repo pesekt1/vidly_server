@@ -31,13 +31,13 @@ describe("returns", () => {
       customer: {
         _id: customerId,
         name: "Tomas",
-        phone: "12345"
+        phone: "12345",
       },
       movie: {
         _id: movieId,
         title: "movie1",
-        dailyRentalRate: 2
-      }
+        dailyRentalRate: 2,
+      },
     });
 
     await rental.save();
@@ -45,7 +45,7 @@ describe("returns", () => {
 
   afterEach(async () => {
     await server.close(); //closing server after each test
-    await Rental.remove({}); // dropping collection genres after each test
+    await Rental.deleteMany({}); // dropping collection genres after each test
   });
 
   it("should work", async () => {
@@ -76,7 +76,7 @@ describe("returns", () => {
 
   //404 - no rental found
   it("should return 404 if rental is not found", async () => {
-    await Rental.remove({});
+    await Rental.deleteMany({});
     const res = await exec();
     expect(res.status).toBe(404);
   });
