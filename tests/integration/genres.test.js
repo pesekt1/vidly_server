@@ -2,7 +2,7 @@ const request = require("supertest");
 const { Genre } = require("../../models/genres");
 const { User } = require("../../models/users");
 
-let server;
+let server; // create a server variable, which we can change later
 
 //test suite for genres API:
 describe("/api/genres", () => {
@@ -20,9 +20,10 @@ describe("/api/genres", () => {
       const payload = [
         { name: "genre1" },
         { name: "genre2" },
-        { name: "genre3" }
+        { name: "genre3" },
       ];
 
+      //populate genres collection in test database
       await Genre.insertMany(payload);
       //payload[0].name = "new genre"; //simulating error
 

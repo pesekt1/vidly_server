@@ -9,7 +9,7 @@ const validateObjectId = require("../middleware/validateObjectId");
 router.use(express.json());
 
 router.get("/", async (req, res, next) => {
-  throw new Error("could not get genres ");
+  //throw new Error("could not get genres ");
   const genres = await Genre.find().sort("name");
   res.send(genres);
 });

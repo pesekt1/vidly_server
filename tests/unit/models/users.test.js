@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 describe("user.generateAuthToken", () => {
   it("should generate a valid JWT", () => {
     const payload = {
+      //we need to set _id as ObjectId and put it in hexString format
       _id: new mongoose.Types.ObjectId().toHexString(),
-      isAdmin: true
+      isAdmin: true,
     };
     const user = new User(payload);
     const token = user.generateAuthToken();
