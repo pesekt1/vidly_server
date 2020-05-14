@@ -16,8 +16,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+//we dont expose the user id - instead we use /me
 router.get("/me", auth, async (req, res) => {
   try {
+    //we get user id from req.user which was set by auth middleware
     const user = await User.findById(req.user._id).select("-password");
     if (!user) return res.status(404).send("User with given id was not found");
 
@@ -35,7 +37,7 @@ router.post("/", async (req, res) => {
   if (user) return res.status(400).send("user already registered");
 
   user = new User(_.pick(req.body, ["name", "email", "password"]));
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(10); //salt is a random string
   user.password = await bcrypt.hash(user.password, salt);
 
   const token = user.generateAuthToken();

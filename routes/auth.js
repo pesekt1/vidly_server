@@ -8,14 +8,13 @@ const { User } = require("../models/users");
 router.use(express.json());
 
 router.post("/", async (req, res) => {
-  console.log("auth post");
-  console.log(req.body);
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send("invaild email or password");
 
+  //bcrypt will get the original salt and rehash the plain text password
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).send("invaild email or password");
 
@@ -26,9 +25,7 @@ router.post("/", async (req, res) => {
 function validate(req) {
   const schema = Joi.object({
     email: Joi.string().required(),
-    password: Joi.string()
-      .min(4)
-      .required()
+    password: Joi.string().min(4).required(),
   });
 
   return schema.validate(req);

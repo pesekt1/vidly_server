@@ -32,13 +32,12 @@ router.get("/", async (req, res) => {
 // });
 
 router.post("/", auth, async (req, res) => {
-  console.log(req.body);
   const { error } = validate(req.body);
-  console.log(error);
   if (error) return res.status(400).send(error.details[0].message);
 
   const movie = await Movie.findById(req.body.movieId);
   if (!movie) return res.status(404).send("invalid movie id");
+  if (movie.numberInStock < 1) res.status(400).send("movie out of stock");
 
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(404).send("invalid customer id");
@@ -46,17 +45,18 @@ router.post("/", auth, async (req, res) => {
   let rental = new Rental({
     customer: customer,
     movie: movie,
-    date: req.body.date
+    date: req.body.date,
   });
 
   try {
-    // we pass the name of the collection in db "rentals"
-    new Fawn.Task()
+    // all operations are treated as a unit, if some fail, it will rollback all
+    new Fawn.Task() // transaction - can contain multiple operations
       .save("rentals", rental)
       .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } })
-      .run();
+      .run(); // this is the final method to close the transaction
+
     res.send(rental);
-  } catch (error) {
+  } catch (ex) {
     res.status(500).send("something failed");
   }
 });
