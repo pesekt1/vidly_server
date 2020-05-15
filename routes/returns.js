@@ -6,6 +6,7 @@ const { Customer } = require("../models/customers");
 const Fawn = require("fawn");
 const mongoose = require("mongoose");
 const auth = require("../middleware/auth");
+const moment = require("moment");
 
 router.use(express.json());
 
@@ -24,7 +25,7 @@ router.post("/", auth, async (req, res) => {
 
   const rental = await Rental.findOne({
     "customer._id": req.body.customerId,
-    "movie._id": req.body.movieId
+    "movie._id": req.body.movieId,
   });
 
   if (!rental) return res.status(404).send("invalid rental");
@@ -32,15 +33,19 @@ router.post("/", auth, async (req, res) => {
   if (rental.dateReturned)
     return res.status(400).send("rental is already processed");
 
-  //where are we setting res.status 200???
-
   //we set the return date for this rental
-  //await Rental.findByIdAndUpdate(rental._id, { dateReturned: Date.now() });
   rental.dateReturned = new Date();
+
+  //we set rental fee
+  rental.rentalFee =
+    moment().diff(rental.dateOut, "days") * rental.movie.dailyRentalRate;
+  // parseInt(rental.dateReturned - rental.dateOut) *
+  // rental.movie.dailyRentalRate;
+
   await rental.save();
 
   try {
-    res.send(rental);
+    res.send(rental); //this will automatically have status 200
   } catch (error) {
     console.log("error: " + error.message);
   }

@@ -15,7 +15,7 @@ describe("returns", () => {
   //setting up a happy path - this is a successful path template
   exec = () => {
     return request(server)
-      .post(path)
+      .post(path) //we only need to implement POST requests
       .set("x-auth-token", token)
       .send({ customerId, movieId });
   };
@@ -40,7 +40,7 @@ describe("returns", () => {
       },
     });
 
-    await rental.save();
+    await rental.save(); //save rental object for testing
   });
 
   afterEach(async () => {
@@ -100,5 +100,39 @@ describe("returns", () => {
     //time difference in milliseconds:
     const diff = new Date() - Date.parse(res.body.dateReturned);
     expect(diff).toBeLessThan(10 * 1000); //expect less than 10s
+  });
+
+  it("should set the rentalFee if input is valid", async () => {
+    //we simulate that we rented it 7 days ago
+    rental.dateOut = moment().add(-7, "days").toDate();
+    await rental.save();
+
+    const res = await exec();
+
+    const rentalInDb = await Rental.findById(rental._id);
+    expect(rentalInDb.rentalFee).toBe(14); // 7days, daily fee 2... 7*2=14
+  });
+
+  it("should increase the movie stock if input is valid", async () => {
+    const res = await exec();
+
+    const movieInDb = await Movie.findById(movieId);
+    expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
+  });
+
+  it("should return the rental if input is valid", async () => {
+    const res = await exec();
+
+    const rentalInDb = await Rental.findById(rental._id);
+
+    expect(Object.keys(res.body)).toEqual(
+      expect.arrayContaining([
+        "dateOut",
+        "dateReturned",
+        "rentalFee",
+        "customer",
+        "movie",
+      ])
+    );
   });
 });
