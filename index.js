@@ -6,6 +6,7 @@ require("./startup/log")(); //logger - before other modules, so that we get logs
 require("./startup/cors.js")(app); //cors package - to be able to communicate between different ports and send headers
 require("./startup/routes")(app); // we are calling the method defined in startup/routes.js
 require("./startup/db")(); //running startup/db.js function
+require("./startup/db_mysql")(); //running startup/db.js function
 require("./startup/config")(); //configuration check
 require("./startup/validation")(); //validation using Joi
 require("./startup/prod")(app); //packages for production

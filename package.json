@@ -31,6 +31,8 @@
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "mongoose": "^5.8.11",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.12",
     "winston": "^3.2.1",
     "winston-mongodb": "^5.0.1"
   },
