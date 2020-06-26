@@ -1,9 +1,11 @@
 const dbConfig = require("../config_mysql/db.config");
 const Sequelize = require("sequelize");
+const config = require("config");
 
 function connect() {
   let sequelize = {};
-  if (process.env.NODE_ENV == "production") {
+  const env = config.get("env");
+  if (env == "production") {
     const db = config.get("mysql_db");
     sequelize = new Sequelize(db, {
       dialect: dbConfig.dialect,
