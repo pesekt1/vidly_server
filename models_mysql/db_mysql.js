@@ -2,6 +2,7 @@ const dbConfig = require("../config_mysql/db.config");
 const Sequelize = require("sequelize");
 const config = require("config");
 
+//refactor this - repetitive code, possibly move the function somewhere else
 function connect() {
   let sequelize = {};
   const env = config.get("env");
