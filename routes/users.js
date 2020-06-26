@@ -29,26 +29,28 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+//create a user
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.body.email }); //check if exists
   if (user) return res.status(400).send("user already registered");
 
+  //create new user object
   user = new User(_.pick(req.body, ["name", "email", "password"]));
   const salt = await bcrypt.genSalt(10); //salt is a random string
-  user.password = await bcrypt.hash(user.password, salt);
+  user.password = await bcrypt.hash(user.password, salt); //hash users password
 
   const token = user.generateAuthToken();
 
   try {
-    await user.save();
+    await user.save(); // save new user in the DB
     res
       .header("x-auth-token", token)
       .header("access-control-expose-headers", "x-auth-token")
       .header("Access-Control-Allow-Origin", "*")
-      .send(_.pick(user, ["_id", "name", "email"]));
+      .send(_.pick(user, ["_id", "name", "email"])); //send the response
   } catch (error) {
     console.log("error: " + error.message);
   }
