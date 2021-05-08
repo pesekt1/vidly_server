@@ -16,4 +16,7 @@ module.exports = function () {
   //otherwise there is some deprecation warning
   mongoose.set("useCreateIndex", true);
   mongoose.set("useFindAndModify", false);
+
+  //showing mongoose queries
+  mongoose.set("debug", true);
 };

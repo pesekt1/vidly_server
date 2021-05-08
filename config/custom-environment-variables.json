@@ -1,6 +1,6 @@
 {
   "jwtPrivateKey": "vidly_jwtPrivateKey",
-  "db": "vidly_db",
+  "db": "vidly",
   "mysql_db": "CLEARDB_DATABASE_URL",
   "env": "NODE_ENV"
 }

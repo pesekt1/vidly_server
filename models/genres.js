@@ -1,4 +1,5 @@
 const Joi = require("@hapi/joi");
+const { truncate } = require("lodash");
 const mongoose = require("mongoose");
 
 //We have 2 separate validators here:
@@ -6,7 +7,7 @@ const mongoose = require("mongoose");
 // 2) our validate function
 
 const genreSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true},
 });
 
 //class based on our schema compiled into a model
