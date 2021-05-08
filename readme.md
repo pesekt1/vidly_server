@@ -78,7 +78,7 @@ Endpoint for login:
 - models
 
 ### Integration tests
-- testing the database via the endpoints
+- testing the database via the endpoints.
 
 ```javascript
 //test suite for genres API:
