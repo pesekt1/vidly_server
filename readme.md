@@ -66,4 +66,49 @@ The information about if a user is admin is saved in JWT (in the payload).
 
 Endpoint for login:
 
-<.../api/auth>
+<http://{HOST}/api/auth>
+
+## Tests
+
+- Jest framework
+- Supertest library
+
+### Unit tests
+- middleware
+- models
+
+### Integration tests
+- testing the database via the endpoints
+
+```javascript
+//test suite for genres API:
+describe("/api/genres", () => {
+  beforeEach(() => {
+    server = require("../../index"); //loading server before each test
+  });
+  afterEach(async () => {
+    await server.close(); //closing server after each test
+    await Genre.deleteMany({}); // dropping collection genres after each test
+  });
+
+  //nested test suite for GET request
+  describe("GET /", () => {
+    it("should return all genres", async () => {
+      const payload = [
+        { name: "genre1" },
+        { name: "genre2" },
+        { name: "genre3" },
+      ];
+
+      //populate genres collection in test database
+      await Genre.insertMany(payload);
+      //payload[0].name = "new genre"; //simulating error
+
+      const res = await request(server).get("/api/genres");
+
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(3);
+      expect(res.body).toMatchObject(payload);
+    });
+  });
+```
