@@ -8,6 +8,8 @@ const { User } = require("../models/users");
 router.use(express.json());
 
 router.post("/", async (req, res) => {
+  // #swagger.tags = ['Authentication']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 

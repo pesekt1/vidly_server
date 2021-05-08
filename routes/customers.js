@@ -5,6 +5,8 @@ const { Customer, validate } = require("../models/customers");
 router.use(express.json());
 
 router.get("/", async (req, res) => {
+  // #swagger.tags = ['Customers']
+
   try {
     const customers = await Customer.find();
     res.send(customers);
@@ -14,6 +16,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  // #swagger.tags = ['Customers']
+
   try {
     const customer = await Customer.findById(req.params.id);
     if (!customer)
@@ -26,13 +30,15 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  // #swagger.tags = ['Customers']
+
   const { error } = validate(req.body);
   if (error) return res.status(404).send(error.details[0].message);
 
   const customer = new Customer({
     name: req.body.name,
     isGold: req.body.isGold,
-    phone: req.body.phone
+    phone: req.body.phone,
   });
 
   try {
@@ -44,6 +50,8 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  // #swagger.tags = ['Customers']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -59,6 +67,8 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  // #swagger.tags = ['Customers']
+
   const customer = await Customer.findByIdAndDelete(req.params.id);
 
   if (!customer) return res.status(404).send("Genre not found");

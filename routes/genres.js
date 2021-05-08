@@ -9,12 +9,16 @@ const validateObjectId = require("../middleware/validateObjectId");
 router.use(express.json());
 
 router.get("/", async (req, res, next) => {
+  // #swagger.tags = ['Genres']
+
   //throw new Error("could not get genres ");
   const genres = await Genre.find().sort("name");
   res.send(genres);
 });
 
 router.get("/:id", validateObjectId, async (req, res) => {
+  // #swagger.tags = ['Genres']
+
   try {
     const genre = await Genre.findById(req.params.id);
     if (!genre)
@@ -27,6 +31,8 @@ router.get("/:id", validateObjectId, async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
+  // #swagger.tags = ['Genres']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -36,6 +42,8 @@ router.post("/", auth, async (req, res) => {
 });
 
 router.put("/:id", [validateObjectId, auth], async (req, res) => {
+  // #swagger.tags = ['Genres']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -51,6 +59,8 @@ router.put("/:id", [validateObjectId, auth], async (req, res) => {
 
 //[auth,admin] are middleware functions which will be executed before route handler
 router.delete("/:id", [validateObjectId, auth, admin], async (req, res) => {
+  // #swagger.tags = ['Genres']
+
   const genre = await Genre.findByIdAndDelete(req.params.id);
 
   if (!genre) return res.status(404).send("Genre not found");

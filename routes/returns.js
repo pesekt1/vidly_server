@@ -11,6 +11,8 @@ const moment = require("moment");
 router.use(express.json());
 
 router.get("/", async (req, res) => {
+  // #swagger.tags = ['Returns']
+
   try {
     const rentals = await Rental.find();
     res.send(rentals);
@@ -20,6 +22,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
+  // #swagger.tags = ['Returns']
+
   const { error } = validate(req.body); //we expect rental object
   if (error) return res.status(400).send(error.details[0].message);
 

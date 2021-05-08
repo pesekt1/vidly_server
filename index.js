@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const winston = require("winston");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 require("./startup/log")(); //logger - before other modules, so that we get logs
 require("./startup/cors.js")(app); //cors package - to be able to communicate between different ports and send headers
 require("./startup/routes")(app); // we are calling the method defined in startup/routes.js

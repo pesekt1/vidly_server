@@ -8,6 +8,8 @@ const { User, validate } = require("../models/users");
 router.use(express.json());
 
 router.get("/", async (req, res) => {
+  // #swagger.tags = ['Users']
+
   try {
     const users = await User.find();
     res.send(users);
@@ -18,6 +20,8 @@ router.get("/", async (req, res) => {
 
 //we dont expose the user id - instead we use /me
 router.get("/me", auth, async (req, res) => {
+  // #swagger.tags = ['Users']
+
   try {
     //we get user id from req.user which was set by auth middleware
     const user = await User.findById(req.user._id).select("-password");
@@ -31,6 +35,8 @@ router.get("/me", auth, async (req, res) => {
 
 //create a user
 router.post("/", async (req, res) => {
+  // #swagger.tags = ['Users']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -57,6 +63,8 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  // #swagger.tags = ['Users']
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -71,6 +79,8 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  // #swagger.tags = ['Users']
+
   const user = await User.findByIdAndDelete(req.params.id);
 
   if (!user) return res.status(404).send("User not found");
