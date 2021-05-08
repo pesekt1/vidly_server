@@ -29,3 +29,23 @@ That is where environmental variables are mapped - so they have to be set up in 
 The same principle is how the application choses the database connections:
 If it runs on the cloud, it will read the environmental variables with connection strings for MongoDB and ClearDB MySQL on Heroku.
 If it runs on localhost, it will connect to the local MySQL and MongoDB.
+
+## Swagger documentation
+
+- swagger.js
+- swagger_output.json
+
+run:
+```
+node swagger.js
+```
+
+This will generate swagger_output.json
+
+In the index.js:
+
+```javascript
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger_output.json");
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+```
