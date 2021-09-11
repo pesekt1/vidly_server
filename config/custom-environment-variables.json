@@ -3,5 +3,5 @@
   "db": "vidly",
   "mysql_db": "CLEARDB_DATABASE_URL",
   "env": "NODE_ENV",
-  "host": "https://vidly-web-server.herokuapp.com/"
+  "host": "vidly-web-server.herokuapp.com/"
 }

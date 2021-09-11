@@ -4,8 +4,9 @@ const winston = require("winston");
 const config = require("config");
 
 const swaggerUi = require("swagger-ui-express");
+const host = config.get("host");
 const swaggerFile =
-  config.get(host) == "localhost"
+  host === "localhost"
     ? require("./swagger_output.json")
     : require("./swagger_output-for-heroku.json");
 
