@@ -3,15 +3,6 @@ const app = express();
 const winston = require("winston");
 const config = require("config");
 
-const swaggerUi = require("swagger-ui-express");
-const host = config.get("host");
-const swaggerFile =
-  host === "localhost"
-    ? require("./swagger_output.json")
-    : require("./swagger_output-for-heroku.json");
-
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
 require("./startup/log")(); //logger - before other modules, so that we get logs
 require("./startup/cors.js")(app); //cors package - to be able to communicate between different ports and send headers
 require("./startup/routes")(app); // we are calling the method defined in startup/routes.js
@@ -20,6 +11,15 @@ require("./startup/db")(); //running startup/db.js function
 require("./startup/config")(); //configuration check
 require("./startup/validation")(); //validation using Joi
 require("./startup/prod")(app); //packages for production
+
+const swaggerUi = require("swagger-ui-express");
+const host = config.get("host");
+const swaggerFile =
+  host === "localhost"
+    ? require("./swagger_output.json")
+    : require("./swagger_output-for-heroku.json");
+
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //simulating unhandledRejection:
 // const p = Promise.reject(new Error("Something went wrong miserably. "));
