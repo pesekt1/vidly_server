@@ -67,6 +67,7 @@ app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 API for swagger documentation:
 <http://localhost:3900/swagger>
 
+NOTE: For localhost it works with http protocol but for Heroku we need to use https protocol
 
 ## Security
 
