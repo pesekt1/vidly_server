@@ -24,8 +24,8 @@ Check out package.json to see what libraries are used
 Server is listening on port 3900.
 
 Start the app on localhost and test some APIs:
-http://localhost:3900/api/movies
-http://localhost:3900/api/genres_sql
+<http://localhost:3900/api/movies>
+<http://localhost:3900/api/genres_sql>
 
 ## The app can run on cloud as well:
 
