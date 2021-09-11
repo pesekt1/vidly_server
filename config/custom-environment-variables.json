@@ -2,5 +2,6 @@
   "jwtPrivateKey": "vidly_jwtPrivateKey",
   "db": "vidly",
   "mysql_db": "CLEARDB_DATABASE_URL",
-  "env": "NODE_ENV"
+  "env": "NODE_ENV",
+  "host": "https://vidly-web-server.herokuapp.com/"
 }

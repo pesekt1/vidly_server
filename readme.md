@@ -38,6 +38,10 @@ The same principle is how the application choses the database connections:
 - If it runs on the cloud, it will read the environmental variables with connection strings for MongoDB and ClearDB MySQL on Heroku.
 - If it runs on localhost, it will connect to the local MySQL and MongoDB.
 
+If there is error, use Heroku CLI to read the full logs:
+
+heroku logs --tail app=vidly-web-server
+
 ## Swagger documentation
 
 - swagger.js
@@ -57,6 +61,10 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 ```
+
+API for swagger documentation:
+<http://localhost:3900/api/movies>
+
 
 ## Security
 

@@ -1,9 +1,14 @@
 const express = require("express");
 const app = express();
 const winston = require("winston");
+const config = require("config");
 
 const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger_output.json");
+const swaggerFile =
+  config.get(host) == "localhost"
+    ? require("./swagger_output.json")
+    : require("./swagger_output-for-heroku.json");
+
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 require("./startup/log")(); //logger - before other modules, so that we get logs
