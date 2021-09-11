@@ -15,7 +15,7 @@ const doc = {
   // basePath: This is the root of your project.
   basePath: "/",
   // schemes: These are the protocols used.
-  schemes: ["http"],
+  schemes: ["https"],
   consumes: ["application/json"],
   produces: ["application/json"],
   tags: [
