@@ -12,15 +12,6 @@ require("./startup/config")(); //configuration check
 require("./startup/validation")(); //validation using Joi
 require("./startup/prod")(app); //packages for production
 
-// app.use((request, response, next) => {
-//   response.header("Access-Control-Allow-Origin", "*");
-//   response.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
-
 const swaggerUi = require("swagger-ui-express");
 const host = config.get("host");
 const swaggerFile =
