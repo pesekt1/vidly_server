@@ -124,11 +124,22 @@ describe("/api/genres", () => {
   });
 ```
 
+Testing mongoDB via GitHub Actions:
+
+https://futurestud.io/tutorials/github-actions-using-mongodb
+
+
 package.json:
 
 ```json
 "scripts": {
   "test": "jest --watchAll --verbose --detectOpenHandles",
-  "start": "node index.js"
 },
+```
+
+If tests dont finish because some async communication is still open, we can force it to exit:
+```json
+  "scripts": {
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+  },
 ```
