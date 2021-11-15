@@ -15,6 +15,10 @@ describe("/api/genres", () => {
     await Genre.deleteMany({}); // dropping collection genres after each test
   });
 
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   //nested test suite for GET request
   describe("GET /", () => {
     it("should return all genres", async () => {

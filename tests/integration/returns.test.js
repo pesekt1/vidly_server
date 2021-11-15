@@ -48,6 +48,10 @@ describe("returns", () => {
     await Rental.deleteMany({}); // dropping collection genres after each test
   });
 
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   it("should work", async () => {
     result = await Rental.findById(rental._id);
     expect(result).not.toBeNull();

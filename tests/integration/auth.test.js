@@ -29,6 +29,10 @@ describe("auth middleware", () => {
     await Genre.deleteMany({}); // dropping collection genres after each test
   });
 
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   //no token - status 401
   it("should return 401 if client is not logged in", async () => {
     token = "";
