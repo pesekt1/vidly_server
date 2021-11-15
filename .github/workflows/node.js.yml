@@ -29,5 +29,4 @@ jobs:
       - run: npm run build --if-present
       - run: npm test
         env:
-          db: ${{secrets.DB}}
-          mysql_db: ${{secrets.MYSQL_DB}}
+          db: ${{secrets.VIDLY}}
