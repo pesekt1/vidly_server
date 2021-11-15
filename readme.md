@@ -123,3 +123,12 @@ describe("/api/genres", () => {
     });
   });
 ```
+
+package.json:
+
+```json
+"scripts": {
+  "test": "jest --watchAll --verbose --detectOpenHandles",
+  "start": "node index.js"
+},
+```
