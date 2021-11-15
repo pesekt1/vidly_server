@@ -2,7 +2,7 @@
 
 Check out package.json to see what libraries are used
 
-## Databases
+## Databases:
 
 - MySQL Database + sequelize ORM mapping library
 - MongoDB Database + mongoose ODM mapping library
