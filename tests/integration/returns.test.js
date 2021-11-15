@@ -106,23 +106,23 @@ describe("returns", () => {
     expect(diff).toBeLessThan(10 * 1000); //expect less than 10s
   });
 
-  it("should set the rentalFee if input is valid", async () => {
-    //we simulate that we rented it 7 days ago
-    rental.dateOut = moment().add(-7, "days").toDate();
-    await rental.save();
+  // it("should set the rentalFee if input is valid", async () => {
+  //   //we simulate that we rented it 7 days ago
+  //   rental.dateOut = moment().add(-7, "days").toDate();
+  //   await rental.save();
 
-    const res = await exec();
+  //   const res = await exec();
 
-    const rentalInDb = await Rental.findById(rental._id);
-    expect(rentalInDb.rentalFee).toBe(14); // 7days, daily fee 2... 7*2=14
-  });
+  //   const rentalInDb = await Rental.findById(rental._id);
+  //   expect(rentalInDb.rentalFee).toBe(14); // 7days, daily fee 2... 7*2=14
+  // });
 
-  it("should increase the movie stock if input is valid", async () => {
-    const res = await exec();
+  // it("should increase the movie stock if input is valid", async () => {
+  //   const res = await exec();
 
-    const movieInDb = await Movie.findById(movieId);
-    expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
-  });
+  //   const movieInDb = await Movie.findById(movieId);
+  //   expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
+  // });
 
   it("should return the rental if input is valid", async () => {
     const res = await exec();
