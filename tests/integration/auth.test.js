@@ -30,7 +30,7 @@ describe("auth middleware", () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    mongoose.disconnect();
   });
 
   //no token - status 401

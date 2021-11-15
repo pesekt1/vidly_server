@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 describe("user.generateAuthToken", () => {
   afterAll(async () => {
-    await mongoose.connection.close();
+    mongoose.disconnect();
   });
 
   it("should generate a valid JWT", () => {

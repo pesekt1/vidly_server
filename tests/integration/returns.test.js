@@ -49,7 +49,7 @@ describe("returns", () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    mongoose.disconnect();
   });
 
   it("should work", async () => {

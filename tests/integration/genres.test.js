@@ -16,7 +16,7 @@ describe("/api/genres", () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    mongoose.disconnect();
   });
 
   //nested test suite for GET request
