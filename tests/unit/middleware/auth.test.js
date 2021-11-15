@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const auth = require("../../../middleware/auth");
 
 describe("auth middleware", () => {
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   it("it should populate req.user with the payload of a valid JWT", () => {
     //we need testing payload
     const payload = {

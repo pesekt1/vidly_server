@@ -4,6 +4,10 @@ const config = require("config");
 const mongoose = require("mongoose");
 
 describe("user.generateAuthToken", () => {
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
   it("should generate a valid JWT", () => {
     const payload = {
       //we need to set _id as ObjectId and put it in hexString format
