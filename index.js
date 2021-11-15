@@ -34,7 +34,7 @@ app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 //port listening:
 const port = process.env.PORT || 3900;
 const server = app.listen(port, () =>
-  winston.info(`listening on port ${port}...`)
+  winston.info(`listening on port ${config.get("db")}...`)
 );
 
 module.exports = server;
