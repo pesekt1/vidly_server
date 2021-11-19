@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  sequelize.define(
+  const Genre = sequelize.define(
     "genre",
     {
       name: {
@@ -9,15 +9,5 @@ module.exports = (sequelize, Sequelize) => {
     { timestamps: false }
   );
 
-  // const Genre = sequelize.define(
-  //   "genre",
-  //   {
-  //     name: {
-  //       type: Sequelize.STRING,
-  //     },
-  //   },
-  //   { timestamps: false }
-  // );
-
-  // return Genre;
+  return Genre;
 };
