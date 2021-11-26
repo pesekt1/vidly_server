@@ -1,7 +1,7 @@
 {
   "jwtPrivateKey": "",
   "db": "mongodb://localhost/vidly",
-  "requiresAuth": true,
+  "requiresAuth": false,
   "env": "development",
   "host": "localhost"
 }
