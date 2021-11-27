@@ -36,11 +36,13 @@ router.get("/me", auth, async (req, res) => {
 //create a user
 router.post("/", async (req, res) => {
   // #swagger.tags = ['Users']
-
+  console.log(req.body);
   const { error } = validate(req.body);
+  console.log(error);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email }); //check if exists
+  console.log("existing user: ", user);
   if (user) return res.status(400).send("user already registered");
 
   //create new user object
