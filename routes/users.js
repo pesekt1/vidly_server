@@ -59,8 +59,8 @@ router.post("/", async (req, res) => {
       .header("access-control-expose-headers", "x-auth-token")
       .header("Access-Control-Allow-Origin", "*")
       .send(_.pick(user, ["_id", "name", "email"])); //send the response
-  } catch (error) {
-    console.log("error: " + error.message);
+  } catch (e) {
+    console.log("error: " + e.message);
   }
 });
 
