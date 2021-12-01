@@ -44,7 +44,7 @@ If there is error, use Heroku CLI to read the full logs:
 
 heroku logs --tail app=vidly-web-server
 
-## Swagger documentation
+## Swagger documentation.
 
 - swagger.js
 - swagger_output.json
