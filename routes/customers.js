@@ -36,9 +36,14 @@ router.post("/", async (req, res) => {
   if (error) return res.status(404).send(error.details[0].message);
 
   const customer = new Customer({
-    name: req.body.name,
-    isGold: req.body.isGold,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
+    points: req.body.points,
     phone: req.body.phone,
+    birth_date: req.body.birth_date,
   });
 
   try {
