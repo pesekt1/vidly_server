@@ -38,5 +38,6 @@ describe("Test 5", () => {
     cy.get("#password").type("123456");
     cy.get("button").contains("Login").click();
     cy.url().should("not.contain", "/login");
+    cy.get(".alert").should("not.exist");
   });
 });

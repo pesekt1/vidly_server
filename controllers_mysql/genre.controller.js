@@ -22,7 +22,7 @@ exports.create = (req, res) => {
   // Save Genre in the database
   Genre.create(genre)
     .then((data) => {
-      res.send(data);
+      res.status(201).send(data);
     })
     .catch((err) => {
       res.status(500).send({
