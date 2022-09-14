@@ -91,9 +91,86 @@ Authentication is done using JWT - Json web token. If a user logs in successfull
 
 The information about if a user is admin is saved in JWT (in the payload).
 
+### Authentication
 Endpoint for login:
 
 <http://{HOST}/api/auth>
+
+```javascript
+const Joi = require("@hapi/joi");
+const bcrypt = require("bcrypt");
+const _ = require("lodash");
+const express = require("express");
+const router = express.Router();
+const { User } = require("../models/users");
+
+router.use(express.json());
+
+router.post("/", async (req, res) => {
+  // #swagger.tags = ['Authentication']
+
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  let user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send("invaild email or password");
+
+  //bcrypt will get the original salt and rehash the plain text password
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(400).send("invaild email or password");
+
+  const token = user.generateAuthToken();
+  res.send(token);
+});
+
+function validate(req) {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(5).required(),
+  });
+
+  return schema.validate(req);
+}
+
+```
+
+### Authorization
+auth middleware:
+
+```javascript
+const jwt = require("jsonwebtoken");
+const config = require("config");
+
+function auth(req, res, next) {
+  if (!config.get("requiresAuth")) return next();
+
+  const token = req.header("x-auth-token");
+  //if client is not logged in
+  if (!token) return res.status(401).send("Access denied. No token provided.");
+
+  try {
+    const decoded = jwt.verify(token, config.get("jwtPrivateKey"));
+    //now we add user property to the request
+    req.user = decoded; //decoded payload based on jwtPrivateKey
+    next(); //pass the request to the next function
+  } catch (error) {
+    res.status(400).send("invalid token");
+  }
+}
+
+module.exports = auth;
+```
+
+Now if we want to protect some routes, we can use this middleware:
+
+In movie routes:
+```javascript
+const auth = require("../middleware/auth");
+
+router.post("/", auth, async (req, res) => {
+```
+
+Before the HTTP post request, the auth middleware is called. If the user is not logged in, the request will be stopped and the user will get 401 error - Access denied. No token provided.
 
 ## Tests
 
