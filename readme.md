@@ -69,6 +69,22 @@ API for swagger documentation:
 
 NOTE: For localhost it works with http protocol but for Heroku we need to use https protocol
 
+We need also swagger for the production version of the app. In our case it runs on Heroku.
+Create a new file swagger-for-heroku.js and set it up to generate swagger-output-for-heroku.json.
+
+Now we can switch between them based on the environment variable NODE_ENV:
+
+```javascript
+const swaggerUi = require("swagger-ui-express");
+const host = config.get("host");
+const swaggerFile =
+  host === "localhost"
+    ? require("./swagger_output.json")
+    : require("./swagger_output-for-heroku.json");
+
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+```
+
 ## Security
 
 Authentication is done using JWT - Json web token. If a user logs in successfully, JWT is provided. If a user is admin (isAdmin property is TRUE), user will have more rights. 
@@ -83,6 +99,17 @@ Endpoint for login:
 
 - Jest framework
 - Supertest library
+- Cypress
+
+Install these only for development:
+package.json:
+```json
+  "devDependencies": {
+    "cypress": "^9.5.4",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  }
+```
 
 ### Unit tests
 - middleware
@@ -144,4 +171,20 @@ If tests dont finish because some async communication is still open, we can forc
   },
 ```
 
-#
+### End to end tests with Cypress
+
+Example of end to end test:
+```javascript
+describe("Login test", () => {
+  it("Gives alert when logging in with incorrect password", () => {
+    cy.visit("http://localhost:3000");
+    cy.contains("Login").click();
+    cy.get("#username").type("pesek@gmail.com");
+    cy.get("#password").type("wrong password");
+    cy.get("button").contains("Login").click();
+    cy.get(".alert").should("contain", "invaild email or password");
+  });
+});
+```
+This will open the browser and run the test. It will open the page, click on Login button, type in the username and password, click on Login button and check if the alert is displayed.
+
