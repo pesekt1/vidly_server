@@ -265,3 +265,4 @@ describe("Login test", () => {
 ```
 This will open the browser and run the test. It will open the page, click on Login button, type in the username and password, click on Login button and check if the alert is displayed.
 
+-
