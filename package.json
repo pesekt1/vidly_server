@@ -34,7 +34,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.7",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.6.2",
+    "sequelize": "^6.29.0",
     "swagger-autogen": "^2.8.1",
     "swagger-jsdoc": "6.0.0",
     "swagger-ui-express": "^4.1.6",
