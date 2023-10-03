@@ -7,7 +7,7 @@ Check out package.json to see what libraries are used
 - MySQL Database + sequelize ORM mapping library
 - MongoDB Database + mongoose ODM mapping library..
 
-## To run it locally:
+## To run it locally:.
 
 1. We need to define environmental variable vidly_jwtPrivatekey in the terminal: example:
    $env:vidly_jwtPrivatekey="mySecureKey"
