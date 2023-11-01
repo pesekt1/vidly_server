@@ -21,7 +21,7 @@ module.exports = function (app) {
   app.use("/api/auth", authRouter);
   app.use("/api/returns", returnsRouter);
   //app.use("/api/movies_sql", sql_moviesRouter);
-  app.use("/api/genres_sql", sql_genresRouter);
+  //app.use("/api/genres_sql", sql_genresRouter);
 
   app.use(error); // error handler
 };
