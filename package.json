@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
     "start": "node index.js",
     "cypress:open": "cypress open"
   },
