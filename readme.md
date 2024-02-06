@@ -250,6 +250,15 @@ If tests dont finish because some async communication is still open, we can forc
 
 ### End to end tests with Cypress
 
+Run both server and client and then run cypress tests.
+```
+npm install cypress --save-dev
+npx cypress open
+npx cypress run
+```
+
+
+
 Example of end to end test:
 ```javascript
 describe("Login test", () => {
